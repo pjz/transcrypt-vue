@@ -1,5 +1,4 @@
 
-
 #// 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 #// and then call `Vue.use(VueRouter)`.
 
@@ -26,10 +25,14 @@ router = __new__(VueRouter(dict(routes=routes)))
 #// 4. Create and mount the root instance.
 #// Make sure to inject the router with the router option to make the
 #// whole app router-aware.
-app = __new__(Vue(dict(
-  router=router
-)))['$mount']('#app')
+if not 'using pragma':
+    app = __new__(Vue(dict(router=router)))['$mount']('#app')
+else:
+    # usually at the top of the file
+    from org.transcrypt.stubs.browser import __pragma__
+    __pragma__ ('alias', 'S', '$')
+    # replacement 'prettier' line:
+    app = __new__(Vue(dict(router=router))).S__mount('#app')
 
 #// Now the app has started!
-
 
